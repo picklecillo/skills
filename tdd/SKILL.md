@@ -57,7 +57,20 @@ Ask: "What should the public interface look like? Which behaviors are most impor
 
 **You can't test everything.** Confirm with the user exactly which behaviors matter most. Focus testing effort on critical paths and complex logic, not every possible edge case.
 
-### 2. Tracer Bullet
+### 2. Tidy First
+
+Once the plan is approved and before writing the first failing test, tidy the existing code you're about to change. Skip this step only when there is no existing code to touch (greenfield).
+
+- [ ] Invoke the `tidy-first` skill, scoped to the files the planned behaviors will touch
+- [ ] Apply only tidyings that make the upcoming behavior change easier — no drive-by refactors
+- [ ] Run the existing tests — they must pass unchanged (structure only, no behavior change)
+- [ ] Commit the tidy diff on its own with a `tidy: <what>` message before starting RED (this overrides tidy-first's "do not commit" step when running inside TDD)
+
+If tidy-first finds nothing worth doing, say so in one line and move on.
+
+**Never mix tidying with behavior changes.** Structure commits and behavior commits stay separate.
+
+### 3. Tracer Bullet
 
 Write ONE test that confirms ONE thing about the system:
 
@@ -68,7 +81,7 @@ GREEN: Write minimal code to pass → test passes
 
 This is your tracer bullet - proves the path works end-to-end.
 
-### 3. Incremental Loop
+### 4. Incremental Loop
 
 For each remaining behavior:
 
@@ -84,7 +97,7 @@ Rules:
 - Don't anticipate future tests
 - Keep tests focused on observable behavior
 
-### 4. Refactor
+### 5. Refactor
 
 After all tests pass, look for [refactor candidates](refactoring.md):
 
